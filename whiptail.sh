@@ -32,7 +32,7 @@ By Charles pax"\
 
 # Download a file
 # When using 'dialog' the greeter can be escaped via ESC or Ctrl-c. The downloader can be excaped via Ctrl-c, but not ESC.
-# When using 'whiptail' the greeter can be escaped via ESC or Ctrl-c. The download can not be excaped by anything. However,
+# When using 'whiptail' the greeter can be escaped Ctrl-c. The download can not be escaped by anything. However,
 # if you press Ctrl-c while downloading, the script will exit via ctrl-c() after the download is complete.
 # Also of note; the 'dialog' downloader gets paused when ESC is held down.
 URL="http://ftp.nl.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/netboot.tar.gz"
