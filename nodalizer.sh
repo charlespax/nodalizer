@@ -217,6 +217,19 @@ install_btcd () {
     make btcd
 }
 
+install_btcctl () {
+    cd $GOPATH/src/github.com/btcsuite/btcd
+    GO111MODULE=on go install -v . ./cmd/...
+}
+
+BTCCTL_VERSION="0.12.0-beta"
+btcctl_installed () {
+    if [ "$BTCCTL_VERSION" = "$(command btcctl --version | cut -d ' ' -f 3)" ]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
 print_welcome () {
     # TODO DO not print welcome screen if -q argument is given
     echo ""
@@ -282,6 +295,13 @@ if [ "$(command btcd --version)" = "btcd version 0.12.0-beta" ]; then
     echo "INSTALLED"
 else
     install_btcd
+fi
+
+printf "Checking btcctl installation... "
+if [ "$(btcctl_installed)" = "true" ]; then
+    echo "INSTALLED"
+else
+    install_btcctl
 fi
 
 echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
