@@ -22,25 +22,27 @@ source ~/.bashrc
 # TODO Install via binary file
 # TODO Give user configuration options (e.g. bitcoind or btcd?)
 
+# TODO Set hashes based on architecture and go version number
 # Set architecture-independent variables
 LND_VERSION_STRING="0.5.2-99-beta"
 BITCOIN_CORE_VERSION="0.17.1"
+GOLANG_VERSION="1.11.5"
 # Set architecture-dependent variables
 if [ "$(uname -p)" = "x86_64" ]; then
-    GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
+    GO_FILENAME="go${GOLANG_VERSION}.linux-amd64.tar.gz"
     GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
     GO_URL="https://dl.google.com/go/"
     GO_FILEURL=$GO_URL/$GO_FILENAME
-    GO_VERSION_STRING="go version go1.11.5 linux/amd64"
+    GO_VERSION_STRING="go version go${GOLANG_VERSION} linux/amd64"
     BITCOIN_CORE_FILENAME="bitcoin-$BITCOIN_CORE_VERSION-x86_64-linux-gnu.tar.gz"
     BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-$BITCOIN_CORE_VERSION/$BITCOIN_CORE_FILENAME"
     BITCOIN_CORE_HASH=`echo "53ffca45809127c9ba33ce0080558634101ec49de5224b2998c489b6d0fc2b17"`
 elif [ "$(uname -p)" = "i686" ]; then
-    GO_FILENAME="go1.11.5.linux-386.tar.gz"
+    GO_FILENAME="go${GOLANG_VERSION}.linux-386.tar.gz"
     GO_HASH=`echo "acd8e05f8d3eed406e09bb58eab89de3f0a139d4aef15f74adeed2d2c24cb440"`
     GO_URL="https://dl.google.com/go/"
     GO_FILEURL=$GO_URL/$GO_FILENAME
-    GO_VERSION_STRING="go version go1.11.5 linux/386"
+    GO_VERSION_STRING="go version go${GOLANG_VERSION} linux/386"
     BITCOIN_CORE_FILENAME="bitcoin-$BITCOIN_CORE_VERSION-i686-pc-linux-gnu.tar.gz"
     BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-$BITCOIN_CORE_VERSION/$BITCOIN_CORE_FILENAME"
     BITCOIN_CORE_HASH=`echo "b1e1dcf8265521fef9021a9d49d8661833e3f844ca9a410a9dd12a617553dda1"`
@@ -189,6 +191,7 @@ install_go () {
 
 install_lnd () {
     # Install lnd
+    # sudo apt-get -y install libc6-dev # uncomment to install netdb.h
     go get -d github.com/lightningnetwork/lnd
     cd $GOPATH/src/github.com/lightningnetwork/lnd
     make && make install
