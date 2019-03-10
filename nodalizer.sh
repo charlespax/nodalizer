@@ -15,22 +15,12 @@ source ~/.bashrc
 # TODO Check the operating system. The Bitcoin repository does not have packages for i386 CPUs
 # for some realeases.
 # TODO Support ARM 32-bit and 64-bit
-# TODO Use 'dialog' to get graphical input
-# TODO Determine bitcoind installed version
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
-# TODO Install prerequsits: make. Maybe just $(sudo apt-get install build-essential)
-# TODO Install via binar file
+# TODO Install via binary file
 # TODO Give user configuration options (e.g. bitcoind or btcd?)
-# TODO Add argument functionality to this script:
-#   -h, --help             Print this message
-#   -b, --bitcoin-daemon   Select which Bitcoin daemon to use
-#                          Options are bitcoind or btcd
-#       --bitcoin-source   Install Bitcoin daemon from source rather than repository
-#   -g, --go-version       State which version of go to use
-#       --go-source        Install GO from source rather than repository
 
 # Set architecture-independent variables
 LND_VERSION_STRING="0.5.2-99-beta"
@@ -86,6 +76,26 @@ install_bitcoind_from_ppa () {
     fi
 }
 
+# TODO Add the package requirements to a variable at the top of the script
+# then install all the requirements at the same time for all components
+# TODO For each required package, verify it is installed
+# TODO Make the directory paths relative to the user home directory
+install_lightningd_from_source () {
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+    cd $DIR
+    pwd
+#     sudo apt-get update
+#     sudo apt-get install -y \
+#         autoconf automake build-essential git libtool libgmp-dev \
+#         libsqlite3-dev python python3 net-tools zlib1g-dev libsodium-dev \
+#         asciidoc valgrind python3-pip
+    echo "Cloning lightningd... "
+    git clone https://github.com/ElementsProject/lightning.git
+    cd lightning
+    sudo pip3 install -r tests/requirements.txt
+    #./configure
+    #make
+}
 # TODO Use the official binaries for installation instead of repositories.
 # Include a hash check. Note that the ppa does not have file for ubuntu
 # disco prerelease as of 2019-02-26. In this case, using the official
@@ -252,7 +262,7 @@ read -p "Continue? (Y/n): ";
 if [ "$REPLY" = "n" ]; then
     exit
 else
-    continue
+    true
 fi
 
 printf "Checking for bitcoind installation... "
@@ -304,5 +314,13 @@ else
     install_btcctl
 fi
 
+LIGHTNINGD_VERSION=""
+printf "Checking lightningd installation... "
+if [ "$LIGHTNINGD_VERSION" = "btcd version 0.12.0-beta" ]; then
+    echo "INSTALLED"
+else
+    true
+#    install_lightningd_from_source
+fi
 echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
 
