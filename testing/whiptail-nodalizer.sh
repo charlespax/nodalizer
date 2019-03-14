@@ -17,11 +17,11 @@ ctrl_c () {
 trap ctrl_c 2
 trap do_on_exit EXIT
 
-dialog --title "Welcome to" --msgbox "My test program." 15 60
+whiptail --title "Welcome to" --msgbox "My test program." 15 60
 
 # Download a file
 URL="http://ftp.nl.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/netboot.tar.gz"
-wget -c "$URL" 2>&1 |  stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | dialog --title "Download Test" --gauge "Ubuntu..." 6 60 0
+wget -c "$URL" 2>&1 |  stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | whiptail --title "Download Test" --gauge "Ubuntu..." 6 60 0
 # When using 'dialog':
 #   - The msgbox can be escaped via ESC or Ctrl-c.
 #   - The downloader can be excaped via Ctrl-c, but not ESC.
