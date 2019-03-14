@@ -15,6 +15,8 @@ source ~/.bashrc
 # TODO Check the operating system. The Bitcoin repository does not have packages for i386 CPUs
 # for some realeases.
 # TODO Support ARM 32-bit and 64-bit
+# TODO Check for Ubuntu version. 19.04 has golang-1.12 in the repositories
+# TODO Check repositories for packages. Install them if they exist. Packages > binaries > source
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
 # TODO Keep a set of variables to store the status of each installation
