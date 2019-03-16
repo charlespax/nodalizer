@@ -6,6 +6,8 @@ import shutil
 my_url = 'http://cdimage.ubuntu.com/daily-live/current/disco-desktop-amd64.iso.zsync'
 my_file_name = 'disco-desktop-amd64.iso.zsync'
 
+# TODO This function should return a pointer to the file object. We can keep
+# track of files without always referring to their file names.
 def downloadFile(url, file_name):
     with urllib.request.urlopen(url) as response, open(file_name, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
